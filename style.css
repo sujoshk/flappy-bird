@@ -1,10 +1,48 @@
-html {
-    box-sizing: border-box;
+.game-container {
+    width: 500px;
+    height: 730px;
+    position: absolute;
+    border: 1px solid red;
+}
+
+.sky {
+    background-color: lightblue;
+    width: 500px;
+    height: 580px;
+    position: absolute;
+    border: 1px solid black;
 }
 
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    
+
+.ground {
+    background-color: brown;
+    width: 500px;
+    height: 150px;
+    position: absolute;
+
+    /* this property gives space between the top and the element */
+    top: 580px;
+
 }
+
+
+.bird {
+    background-color: yellow;
+    position: absolute;
+    width: 60px;
+    height: 45px;
+}
+
+
+
+.obstacle {
+    background-color: green;
+    width: 60px;
+    height: 300px;
+    position: absolute;
+}
+
+
+
+
