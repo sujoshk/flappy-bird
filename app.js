@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let birdBottom = 100;
     let gravity = 1;
     let isGameOver = false;
-
+    let gap = 400;
 
 
 
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function jump() {
 
         if(birdBottom < 490) {
-            birdBottom +=50;
+            birdBottom +=30;
         }
 
         bird.style.bottom = bird.bottom + 'px';
@@ -71,26 +71,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // creating an html element via js and adding a classname to a div
         const obstacle = document.createElement('div');
-        obstacle.classList.add('obstacle');
+        const topObstacle = document.createElement('div');
+
+        if(!isGameOver) {
+            obstacle.classList.add('obstacle');
+            topObstacle.classList.add('topObstacle');
+        }
+        
 
         // this puts the obstacle div into the game-container div which is referenced as gameDisplay variable in js
         gameDisplay.appendChild(obstacle);
+        gameDisplay.appendChild(topObstacle);
 
         obstacle.style.left = obstacleLeft + 'px';
+        topObstacle.style.left = obstacleLeft + 'px';
         obstacle.style.bottom = obstacleBottom + 'px';
-
+        topObstacle.style.bottom = obstacleBottom + gap + 'px';
 
         function moveObstacle() {
             obstacleLeft -= 2;
             obstacle.style.left = obstacleLeft + 'px';
+            topObstacle.style.left = obstacleLeft + 'px';
 
             if(obstacleLeft === -50) {
                 clearInterval();
                 gameDisplay.removeChild(obstacle);
+                gameDisplay.removeChild(topObstacle);
             }
 
-            if(birdBottom === 0) {
+            if(
+                obstacleLeft > 200 && obstacleLeft < 280  && birdLeft === 220 && (birdBottom < obstacleBottom + 153 || birdBottom > obstacleBottom + gap -200) || birdBottom === 0) {
                 gameOver();
+                clearInterval(timerId)
             }
 
         }
@@ -100,7 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // this is so that the obstacles can move
         let timerId = setInterval(moveObstacle, 20);
 
-        setTimeout(generateObstacle, 3000);
+        if(!isGameOver) {
+            setTimeout(generateObstacle, 3000);
+        }
+
+        
 
 
 
@@ -115,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function gameOver() {
         clearInterval(gameTimerId);
         isGameOver = true;
-        
+        console.log('GAME OVER')
         // this is how you remove event listeners
         document.removeEventListener('keyup', control);
     }
